@@ -6,6 +6,7 @@ function SearchPage() {
   const [selectedFace, setSelectedFace] = useState(null);
   const [statusMessage, setStatusMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [imageLinks, setImageLinks] = useState([]); // State to store image links
 
   const handleBibNumberChange = (e) => {
     setBibNumber(e.target.value);
@@ -39,6 +40,7 @@ function SearchPage() {
 
       // Set success message
       console.log(response.data.images);
+      setImageLinks(response.data.images); // Store the image links
       setStatusMessage(`Found ${response.data.images.length} images.`);
     } catch (error) {
       // Handle error and set error message
@@ -49,7 +51,7 @@ function SearchPage() {
   };
 
   return (
-    <div className="container">
+    <div className="page container">
       <h2 className="mb-4">Search for Your Photos</h2>
       <form onSubmit={handleSearch}>
         {/* Search by Bib Number */}
@@ -88,6 +90,19 @@ function SearchPage() {
       {statusMessage && (
         <div className="mt-3 alert alert-info" role="alert">
           {statusMessage}
+        </div>
+      )}
+
+      {/* Display images in a 3x3 grid */}
+      {imageLinks.length > 0 && (
+        <div className="mt-4">
+          <div className="image-grid">
+            {imageLinks.map((link, index) => (
+              <div className="image-item" key={index}>
+                <img src={link} alt={`Image ${index + 1}`} className="img-fluid" />
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

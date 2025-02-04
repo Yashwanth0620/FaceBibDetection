@@ -1,0 +1,3 @@
+{
+    "ignore": ["encodings/*", "encodings/**", "uploads/*", "uploads/**", "temp/*", "temp/**"]
+  }

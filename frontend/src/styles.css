@@ -1,6 +1,37 @@
-footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+#root {
+  min-height: 100vh;
+}
+
+div.page {
+  min-height: 85vh;
+}
+
+/* Image Grid */
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(250px, 1fr)
+  ); /* Auto-fill with minimum 250px per column */
+  gap: 16px; /* Space between items */
+  padding: 16px;
+}
+
+.image-item {
+  position: relative;
+  overflow: hidden; /* Crop any overflowed content */
+  border-radius: 8px; /* Optional: rounded corners */
+  background-color: #f0f0f0; /* Optional: background color for images */
+}
+
+.image-item img {
+  width: 100%; /* Makes the image take up the full width of its parent */
+  height: 100%;
+  object-fit: cover; /* Ensures images fill the space without distorting */
+  border-radius: 8px; /* Optional: rounded corners for images */
+  transition: transform 0.3s ease-in-out; /* Smooth hover effect */
+}
+
+.image-item:hover img {
+  transform: scale(1.05); /* Zoom-in effect on hover */
 }

@@ -39,7 +39,7 @@ function Upload() {
   };
 
   return (
-    <div className="container">
+    <div className="page container">
       <h2 className="mb-4">Upload Event Photos</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">

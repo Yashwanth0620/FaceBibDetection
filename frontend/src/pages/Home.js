@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Home() {
   return (
-    <div className="text-center">
+    <div className="page text-center">
       <h1 className="display-4 mb-4">Welcome to Event Photo Finder</h1>
       <p className="lead mb-4">
         Find your photos from events by using your Bib number or face.

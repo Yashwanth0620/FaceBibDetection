@@ -1,7 +1,6 @@
 const path = require("path");
 const fs = require("fs");
 const multer = require("multer");
-// Controller function to upload images
 const { exec } = require("child_process");
 
 // Set up storage configuration for multer
@@ -32,14 +31,34 @@ const uploadImages = (req, res) => {
         .json({ error: "Error uploading images", details: err });
     }
 
-    // Once uploaded, send back the uploaded filenames
+    // Once uploaded, get the uploaded filenames
     const uploadedFiles = req.files.map((file) => file.filename);
 
-    // Respond to the client
-    res.json({
-      message: "Images uploaded and processed successfully",
-      uploadedFiles,
-    });
+    // Process each uploaded file to compute and store face encodings
+    const pythonScriptPath = path.join(__dirname, "../scripts/compute_encodings.py");
+    const uploadDir = path.join(__dirname, "../uploads");
+
+    // Prepare arguments: pass the list of uploaded files
+    const filesArg = uploadedFiles.join(",");
+
+    // Execute the Python script
+    exec(
+      `python "${pythonScriptPath}" "${uploadDir}" "${filesArg}"`,
+      (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Error executing Python script: ${error}`);
+          return res
+            .status(500)
+            .json({ error: "Error processing images", details: stderr });
+        }
+
+        // Respond to the client
+        res.json({
+          message: "Images uploaded and processed successfully",
+          uploadedFiles,
+        });
+      }
+    );
   });
 };
 
